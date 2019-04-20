@@ -1,6 +1,6 @@
-const handleComment = (req, res, db) => {
+const handleEntry = (req, res, db) => {
 	const { id } = req.body;
-	db('comments')
+	db('users')
 		.where('id', '=', id)
 		.increment('entries', 1)
 		.returning('entries')
@@ -11,5 +11,5 @@ const handleComment = (req, res, db) => {
 };
 
 module.exports = {
-	handleComment
+	handleEntry
 };

@@ -7,6 +7,7 @@ const knex = require('knex');
 const signin = require('./controllers/signin');
 const register = require('./controllers/register');
 const profile = require('./controllers/profile');
+const entries = require('./controllers/entries');
 const comment = require('./controllers/comment');
 
 const db = knex({
@@ -34,7 +35,10 @@ app.post('/register', (req, res) => {
 app.get('/profile/:id', (req, res) => {
 	profile.handleProfile(req, res, db);
 });
-app.put('/comment', (req, res) => {
+app.put('/entries', (req, res) => {
+	entries.handleEntry(req, res, db);
+});
+app.post('/comment', (req, res) => {
 	comment.handleComment(req, res, db);
 });
 
