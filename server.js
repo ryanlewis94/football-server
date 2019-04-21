@@ -41,6 +41,9 @@ app.put('/entries', (req, res) => {
 app.post('/comment', (req, res) => {
 	comment.handleComment(req, res, db);
 });
+app.get('/getComment/:matchid', (req, res) => {
+	comment.handleGetComment(req, res, db);
+});
 
 app.listen(3000, () => {
 	console.log('app is running on 3000');
