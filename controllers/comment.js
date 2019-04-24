@@ -18,16 +18,13 @@ const handleComment = (req, res, db) => {
 
 const handleGetComment = (req, res, db) => {
 	const { matchid } = req.params;
-	db
-		.select('*')
-		.from('comments')
+	db('comments')
+		.orderBy('comments.id', 'desc')
+		.join('users', 'comments.userid', '=', 'users.id')
+		.select('users.name', 'users.entries', 'comments.comment')
 		.where({ matchid })
 		.then((comment) => {
-			if (comment.length) {
-				res.json(comment);
-			} else {
-				res.status(400).json('Error 400');
-			}
+			res.json(comment);
 		})
 		.catch((err) => res.status(400).json('Not found'));
 };
