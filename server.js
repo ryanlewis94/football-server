@@ -20,6 +20,11 @@ const db = knex({
 	}
 });
 
+const key = {
+	key: process.env.REACT_APP_API_KEY,
+	secret: process.env.REACT_APP_API_SECRET
+};
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -27,6 +32,9 @@ app.use(cors());
 
 app.get('/', (req, res) => {
 	res.send(database.users);
+});
+app.get('/arsenal', (req, res) => {
+	res.json(key);
 });
 app.post('/signin', signin.handleSignin(db, bcrypt));
 app.post('/register', (req, res) => {
