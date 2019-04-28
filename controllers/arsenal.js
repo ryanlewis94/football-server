@@ -3,8 +3,8 @@ const fetch = require('node-fetch');
 const handleFixtures = (req, res) => {
 	const { leagueid } = req.params;
 	const key = {
-		key: '8uoqtmuaQ1s4bRe4',
-		secret: 'M2baUvmhpyZunhzvLYVekqpbrRgCJuHv'
+		key: process.env.API_KEY,
+		secret: process.env.API_SECRET
 	};
 
 	fetch(
