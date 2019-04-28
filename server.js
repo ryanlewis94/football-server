@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-	res.send(database.users);
+	res.send('Working!');
 });
 app.get('/arsenalFixtures/:leagueid', (req, res) => {
 	arsenal.handleFixtures(req, res);
