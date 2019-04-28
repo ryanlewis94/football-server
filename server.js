@@ -9,6 +9,7 @@ const register = require('./controllers/register');
 const profile = require('./controllers/profile');
 const entries = require('./controllers/entries');
 const comment = require('./controllers/comment');
+const arsenal = require('./controllers/arsenal');
 
 const db = knex({
 	client: 'pg',
@@ -20,11 +21,6 @@ const db = knex({
 	}
 });
 
-const key = {
-	key: process.env.REACT_APP_API_KEY,
-	secret: process.env.REACT_APP_API_SECRET
-};
-
 const app = express();
 
 app.use(bodyParser.json());
@@ -33,8 +29,14 @@ app.use(cors());
 app.get('/', (req, res) => {
 	res.send(database.users);
 });
+app.get('/arsenalFixtures/:leagueid', (req, res) => {
+	arsenal.handleFixtures(req, res);
+});
+app.get('/arsenalLive/:leagueid', (req, res) => {
+	arsenal.handleLive(req, res);
+});
 app.get('/arsenal', (req, res) => {
-	res.json(key);
+	arsenal.handleGame(req, res);
 });
 app.post('/signin', signin.handleSignin(db, bcrypt));
 app.post('/register', (req, res) => {
