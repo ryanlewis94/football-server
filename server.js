@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
+const socket = require('socket.io');
 
 const signin = require('./controllers/signin');
 const register = require('./controllers/register');
@@ -53,6 +54,20 @@ app.get('/getComment/:matchid', (req, res) => {
 	comment.handleGetComment(req, res, db);
 });
 
-app.listen(process.env.PORT || 3000, () => {
+const server = app.listen(process.env.PORT || 3000, () => {
 	console.log(`app is running on ${process.env.PORT}`);
+});
+
+const io = socket(server);
+
+io.on('connection', (socket) => {
+	console.log('user connection');
+
+	socket.on('comment', (data) => {
+		io.sockets.emit('comment', data);
+	});
+
+	//socket.on('disconnect', () => {
+	//	console.log('user disconnected');
+	//});
 });
